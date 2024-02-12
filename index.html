@@ -11,11 +11,11 @@
 <body>
   <!-- Navbar -->
   <nav>
-    <div class="nav-wrapper blue">
+    <div class="nav-wrapper black">
       <div class="container">
-        <a href="#" class="brand-logo center">Tracalorie</a>
+        <a href="#" class="brand-logo center">Weight Tracker</a>
         <ul class="right">
-          <li><a href="#" class="clear-btn btn blue lighten-3">Clear All</a></li>
+          <li><a href="#" class="clear-btn btn dark lighten-2">Clear All</a></li>
         </ul>
       </div>
     </div>
@@ -27,11 +27,11 @@
     <!-- Form Card -->
     <div class="card">
       <div class="card-content">
-        <span class="card-title">Add Meal / Food Item</span>
-        <form class="col">
+        <span class="card-title">Add Meal Request</span>
+        <form class="col d-block d-md-inline">
           <div class="row">
             <div class="input-field col s6">
-              <input type="text" placeholder="Add Item" id="item-name">
+              <input type="text" placeholder="Add Food Item" id="item-name">
               <label for="item-name">Meal</label>
             </div>
             <div class="input-field col s6">
@@ -48,12 +48,15 @@
     </div>
 
     <!-- Calorie Count -->
-    <h3 class="center-align">Total Calories: <span class="total-calories">0</span></h3>
+   <div >
+    <h3 class="center-align d-none d-md-block">Total Calories: <span class="total-calories">0</span></h3>
+    <h6 class="center-align d-block d-md-none">Total Calories: <span class="total-calories">0</span></h6>
 
+   </div>
     <!-- Item List -->
     <ul id="item-list" class="collection">
-      <!-- STATIC ITEM LIST
-      <li class="collection-item" id="item-0">
+      <!-- STATIC ITEM LIST -->
+      <!-- <li class="collection-item" id="item-0">
         <strong>Steak Dinner: </strong> <em>1200 Calories</em>
         <a href="#" class="secondary-content">
           <i class="edit-item fa fa-pencil"></i>
