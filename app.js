@@ -35,15 +35,7 @@ const ItemCrl = (function(){
         return newItem;                
     }, 
 
-    setCurrentItem: function(item){
-      data.currentItem = item;
-     },
  
-     getCurrentItem: function(){
-     return data.currentItem;
-     },
-
-   
     modifyNewItem: function(id){
      let found = null
      //loop through
@@ -78,6 +70,14 @@ const ItemCrl = (function(){
      const index = ids.indexOf(id)
      data.items.splice(index, 1)
     },
+  
+    setCurrentItem: function(item){
+      data.currentItem = item;
+     }, 
+ 
+     getCurrentItem: function(){
+     return data.currentItem;
+     },
   //sum up total calories
     addTotalCalories: function(){
       let total = 0;
@@ -88,6 +88,7 @@ const ItemCrl = (function(){
         data.totalCalories = total;
   
       return data.totalCalories;
+
     },
   //clear all from data structure
   clearAll: function(){
@@ -143,8 +144,17 @@ const UICrl = (function(){
     document.querySelector(UISelectors.itemList).innerHTML = html;
     },
     showTotalCalories: function(computeCalories){
-     document.querySelector(UISelectors.totalCal).textContent = computeCalories; 
+     document.querySelector(UISelectors.totalCal).textContent = computeCalories;
+     const total = ItemCrl.addTotalCalories()
+     if(total > 100 && total < 300){
+      document.querySelector(UISelectors.totalCal).style.color = "#79a8a9";
+
+     }else{
+      document.querySelector(UISelectors.totalCal).style.color = "red";
+
+     } 
     },
+  
      getSelectors: function(){
         return UISelectors;
     },
@@ -303,7 +313,7 @@ const App = (function(ItemCrl, UICrl){
        //split item and id
       const listIdArr = listId.split('-') 
         const id = parseInt(listIdArr[1])
-        ItemCrl.addInputData();
+        
         ItemCrl.modifyNewItem(id);
 
      const currentItemToEdit =  ItemCrl.modifyNewItem(id);
@@ -318,21 +328,22 @@ const App = (function(ItemCrl, UICrl){
   
  // Update meal function
  function updateItemFunc(e){
+    //get form value
+    const input = UICrl.addItemSubmit()
+    //create new item data 
 
-   //compute calories
- const computeCalories = ItemCrl.addTotalCalories();
- //insert total calories in the UI controller
-  UICrl.showTotalCalories(computeCalories);
-
-  //get form value
-  const input = UICrl.addItemSubmit()
-//create new item data 
   const update = ItemCrl.updateMeal(input.name, input.calories) 
+  console.log(ItemCrl.getData())
 
 //display update item in the UI
  UICrl.updateListItem(update)
 
-
+   //compute calories
+   const computeCalories = ItemCrl.addTotalCalories();
+   //insert total calories in the UI controller
+    UICrl.showTotalCalories(computeCalories);
+    // UICrl.paintTotalCalories(computeCalories);
+  
 //clear state/input
 UICrl.clearInitialState()
 
@@ -340,10 +351,7 @@ UICrl.clearInitialState()
  }
 
  function deleteItemFunc(e){
-  //compute calories
-  const computeCalories = ItemCrl.addTotalCalories();
-  //insert total calories in the UI controller
-    UICrl.showTotalCalories(computeCalories);
+
 
    const currentItem = ItemCrl.getCurrentItem();
 //delete item from data structure
@@ -351,6 +359,10 @@ UICrl.clearInitialState()
  //delete list from UI
    UICrl.deleteListItem(currentItem.id)
 
+     //compute calories
+  const computeCalories = ItemCrl.addTotalCalories();
+  //insert total calories in the UI controller
+    UICrl.showTotalCalories(computeCalories);
 //clear state/input
   UICrl.clearInitialState()
 
@@ -359,15 +371,14 @@ UICrl.clearInitialState()
 //clear all function
  function clearAllFunc(e){
 
-  const computeCalories = ItemCrl.addTotalCalories();
-  //insert total calories in the UI controller
-   UICrl.showTotalCalories(computeCalories);
-
  ItemCrl.clearAll()
 
  UICrl.removeAllItems()
 
- 
+ const computeCalories = ItemCrl.addTotalCalories();
+ //insert total calories in the UI controller
+  UICrl.showTotalCalories(computeCalories);
+
  //clear state/input
    UICrl.clearInitialState()
 
